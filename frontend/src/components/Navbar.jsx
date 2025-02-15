@@ -99,13 +99,13 @@ function Navbar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" color="transparent" elevation={0}>
         <Toolbar>
-          {/* Mobile menu button */}
+          {/* Mobile and Medium screen menu button */}
           <IconButton
             color="inherit"
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: 'none' } }}
+            sx={{ mr: 2, display: { md: 'block', lg: 'none' } }}
           >
             <MenuIcon />
           </IconButton>
@@ -116,7 +116,7 @@ function Navbar() {
             component={Link}
             to="/"
             sx={{
-              flexGrow: 0,
+              flexGrow: 1,
               color: 'inherit',
               textDecoration: 'none',
               display: 'flex',
@@ -134,7 +134,7 @@ function Navbar() {
           </Typography>
 
           {/* Navigation Items */}
-          <Box sx={{ display: { xs: 'none', sm: 'flex' }, flexGrow: 1 }}>
+          <Box sx={{ display: { xs: 'none', lg: 'flex' }, flexGrow: 1 }}>
             {navItems.map((item) => (
               <Button
                 key={item.title}
@@ -152,38 +152,16 @@ function Navbar() {
           </Box>
 
           {/* Subscribe and Sign In buttons */}
-          <Button
-            color="primary"
-            sx={{ display: { xs: 'none', sm: 'inline-flex' }, mr: 2 }}
-          >
-            Subscribe
-          </Button>
-          <Button sx={{ display: { xs: 'none', sm: 'inline-flex' } }}>
-            Sign In
-          </Button>
-
-          {/* Search field */}
-          <Box
-            component="form"
-            onSubmit={handleSearchSubmit}
-            sx={{ flexGrow: 1, display: 'flex', justifyContent: { xs: 'center', sm: 'flex-end' } }}
-          >
-            <Search>
-              <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper>
-              <StyledInputBase
-                placeholder="Search…"
-                inputProps={{ 'aria-label': 'search' }}
-                value={searchInput}
-                onChange={(e) => setSearchInput(e.target.value)}
-              />
-            </Search>
+          <Box sx={{ display: { xs: 'none', lg: 'flex' } }}>
+            <Button color="primary" sx={{ mr: 2 }}>
+              Subscribe
+            </Button>
+            <Button>Sign In</Button>
           </Box>
         </Toolbar>
       </AppBar>
 
-      {/* Mobile Drawer */}
+      {/* Mobile and Medium Drawer */}
       <Drawer
         variant="temporary"
         open={mobileOpen}
@@ -192,7 +170,7 @@ function Navbar() {
           keepMounted: true,
         }}
         sx={{
-          display: { xs: 'block', sm: 'none' },
+          display: { xs: 'block', md: 'block', lg: 'none' },
           '& .MuiDrawer-paper': { boxSizing: 'border-box', width: 240 },
         }}
       >
