@@ -77,6 +77,32 @@ function Home() {
 
   return (
     <Container sx={{ py: 4 }}>
+      {/* Welcoming Title */}
+      <Typography
+        variant="h3"
+        component="h1"
+        sx={{
+          textAlign: 'center',
+          mb: 4,
+          animation: 'fadeIn 2s ease-in-out',
+          background: 'linear-gradient(90deg, #00c6ff, #0072ff)', // Blueish gradient
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+        }}
+      >
+        Welcome to Our Blog
+      </Typography>
+
+      {/* Add keyframes for animation */}
+      <style>
+        {`
+          @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+          }
+        `}
+      </style>
+
       {/* Search Section */}
       <Box
         component="form"
