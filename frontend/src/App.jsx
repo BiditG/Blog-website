@@ -11,6 +11,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import CreatePost from './pages/CreatePost';
 import SinglePost from './pages/SinglePost';
+import SideNav from './components/SideNav';
 
 
 
@@ -30,6 +31,7 @@ function App() {
           <Route path='/dashboard' element={<Dashboard/>}/>
           <Route path='/create-post' element={<CreatePost/>}/>
           <Route path='/post/:id' element={<SinglePost/>}/>
+          <Route path='/side-nav' element={<SideNav/>}/>
         </Routes>
         <Footer />
       </Router>

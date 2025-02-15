@@ -77,8 +77,6 @@ function Navbar() {
     { title: 'GADGET', path: '/gadget' },
     { title: 'SOFTWARE', path: '/software' },
     { title: 'APPS', path: '/apps' },
-    { title: 'GAMES', path: '/games' },
-    { title: 'PODCASTS', path: '/podcasts' },
   ];
 
   // Drawer content
