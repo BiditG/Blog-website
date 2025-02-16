@@ -71,12 +71,13 @@ function Navbar() {
     }
   };
 
-  // Navigation items
+  // Updated navigation items to include "Create Post"
   const navItems = [
     { title: 'TECHNOLOGY', path: '/technology' },
     { title: 'GADGET', path: '/gadget' },
     { title: 'SOFTWARE', path: '/software' },
     { title: 'APPS', path: '/apps' },
+    { title: 'CREATE POST', path: '/create-post' },
   ];
 
   // Drawer content
@@ -126,7 +127,7 @@ function Navbar() {
           >
             <Box
               component="img"
-              src="/path-to-your-logo.png"
+              src="...\public\HD-wallpaper-cool-pikachu-black-glasses-cartoon-animation-thumbnail.jpg"
               alt="TechWire"
               sx={{ height: 40, mr: 1 }}
             />
