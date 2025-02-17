@@ -1,6 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Container, Card, CardMedia, CardContent, Typography, Button, Box } from '@mui/material';
+import {
+  Container,
+  Card,
+  CardMedia,
+  CardContent,
+  Typography,
+  Button,
+  Box,
+  TextField,
+  List,
+  ListItem,
+  ListItemText,
+  Divider
+} from '@mui/material';
 
 // Dummy blog data map
 const blogData = {
@@ -9,7 +22,7 @@ const blogData = {
     title: 'Mastering the Art of Writing',
     image: 'https://source.unsplash.com/random/800x400?writing',
     content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed faucibus tellus quis eros semper, a eleifend metus pulvinar. Phasellus a augue vel ex interdum ullamcorper. Praesent at dui quis quam aliquet tempor. Etiam euismod feugiat lacus, in vulputate risus condimentum at.',
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed faucibus tellus quis eros semper, a eleifend metus pulvinar. Phasellus a augue vel ex interdum ullamcorper.',
     username: 'John Doe',
     date: '2023-10-01',
   },
@@ -18,7 +31,7 @@ const blogData = {
     title: 'The Future of Tech',
     image: 'https://source.unsplash.com/random/800x400?tech',
     content:
-      'Suspendisse dictum, magna at volutpat ullamcorper, nunc nisi posuere lacus, non aliquam nibh nunc sed odio. Nulla a lorem sed odio tincidunt mollis. Fusce pellentesque, nulla sit amet pellentesque porta, felis nisi ullamcorper erat, non scelerisque dolor ante non eros.',
+      'Suspendisse dictum, magna at volutpat ullamcorper, nunc nisi posuere lacus, non aliquam nibh nunc sed odio. Nulla a lorem sed odio tincidunt mollis.',
     username: 'Jane Smith',
     date: '2023-10-02',
   },
@@ -27,7 +40,7 @@ const blogData = {
     title: 'Travel and Adventure',
     image: 'https://source.unsplash.com/random/800x400?travel',
     content:
-      'Curabitur quis orci bibendum, elementum nibh eget, fermentum elit. Praesent et convallis urna, a lacinia lorem. Vivamus vestibulum, justo a laoreet venenatis, libero dolor laoreet nunc, vitae facilisis ante ipsum vel erat.',
+      'Curabitur quis orci bibendum, elementum nibh eget, fermentum elit. Praesent et convallis urna, a lacinia lorem.',
     username: 'Alice Johnson',
     date: '2023-10-03',
   },
@@ -51,9 +64,23 @@ function SinglePost() {
     }
   };
 
+  // 🔹 Comments State
+  const [comment, setComment] = useState('');
+  const [comments, setComments] = useState([]);
+
+  // 🔹 Handle Comment Submission
+  const handleCommentSubmit = (e) => {
+    e.preventDefault();
+    if (!comment.trim()) return;
+
+    setComments([...comments, { text: comment, date: new Date() }]);
+    setComment('');
+  };
+
   return (
     <Container sx={{ py: 6 }}>
       <Card>
+        {/* Blog Image */}
         <CardMedia
           component="img"
           image={blog.image}
@@ -61,16 +88,23 @@ function SinglePost() {
           sx={{ height: 400 }}
         />
         <CardContent>
+          {/* Blog Title */}
           <Typography variant="h4" component="h1" gutterBottom>
             ✍️ {blog.title}
           </Typography>
+
+          {/* Blog Content */}
           <Typography variant="body1" lineHeight={1.8} sx={{ mb: 2 }}>
             {blog.content}
           </Typography>
+
+          {/* Author Info */}
           <Typography variant="caption" color="text.secondary">
             👤 Posted by {blog.username} on 📅 {new Date(blog.date).toLocaleDateString()}
           </Typography>
         </CardContent>
+
+        {/* Navigation Buttons */}
         <Box sx={{ p: 2, display: 'flex', justifyContent: 'space-between' }}>
           <Button variant="contained" onClick={() => navigate(-1)}>
             🔙 Back
@@ -94,6 +128,40 @@ function SinglePost() {
           </Box>
         </Box>
       </Card>
+
+      {/* 📝 Comments Section */}
+      <Box sx={{ mt: 4, p: 3, border: '1px solid #ddd', borderRadius: 2 }}>
+        <Typography variant="h6" sx={{ mb: 2 }}>
+          💬 Comments ({comments.length})
+        </Typography>
+        
+        {/* Comment Input */}
+        <form onSubmit={handleCommentSubmit} style={{ display: 'flex', gap: '10px' }}>
+          <TextField
+            fullWidth
+            variant="outlined"
+            size="small"
+            placeholder="Write a comment..."
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+          />
+          <Button type="submit" variant="contained" color="primary">
+            Post
+          </Button>
+        </form>
+
+        {/* Comment List */}
+        <List sx={{ mt: 2 }}>
+          {comments.map((c, index) => (
+            <React.Fragment key={index}>
+              <ListItem>
+                <ListItemText primary={c.text} secondary={c.date.toLocaleString()} />
+              </ListItem>
+              {index < comments.length - 1 && <Divider />}
+            </React.Fragment>
+          ))}
+        </List>
+      </Box>
     </Container>
   );
 }

@@ -1,74 +1,46 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Container, Typography, Grid } from '@mui/material';
+import { Container, Typography, Grid, Alert } from '@mui/material';
 import PostCard from '../components/PostCard';
 
 function CategoryPage() {
   const { category } = useParams();
+  const [filteredBlogs, setFilteredBlogs] = useState([]);
 
-  // Dummy data for demonstration; replace with actual data fetching logic
+  // Dummy blog data (replace with real API calls later)
   const blogs = [
-    {
-      id: 1,
-      title: 'Mastering the Art of Writing',
-      excerpt: 'Explore the secrets behind compelling storytelling and content creation.',
-      image: 'https://source.unsplash.com/random/800x600?blog,writing',
-      category: 'Code',
-      username: 'John Doe',
-      date: '2024-01-15',
-    },
-    {
-      id: 2,
-      title: 'The Future of Tech',
-      excerpt: 'Dive into up-to-date trends and insights shaping the technology world.',
-      image: 'https://source.unsplash.com/random/800x600?blog,tech',
-      category: 'AI',
-      username: 'John Doe',
-      date: '2024-01-15',
-    },
-    {
-      id: 3,
-      title: 'Travel and Adventure',
-      excerpt: 'Discover breathtaking experiences and hidden gems across the globe.',
-      image: 'https://source.unsplash.com/random/800x600?blog,travel',
-      category: 'Travel',
-      username: 'John Doe',
-      date: '2024-01-15',
-    },
-    {
-      id: 4,
-      title: 'Design for the Modern Era',
-      excerpt: 'How contemporary design is influencing our daily lives and workspaces.',
-      image: 'https://source.unsplash.com/random/800x600?blog,design',
-      category: 'Design',
-      username: 'John Doe',
-      date: '2024-01-15',
-    },
-    {
-      id: 5,
-      title: 'Health and Wellness',
-      excerpt: 'Everything you need to know about maintaining a balanced and healthy lifestyle.',
-      image: 'https://source.unsplash.com/random/800x600?blog,health',
-      category: 'Health',
-      username: 'John Doe',
-      date: '2024-01-15',
-    },
+    { id: 1, title: 'AI in the Future', excerpt: 'AI is evolving rapidly...', image: 'https://source.unsplash.com/800x600?ai', category: 'AI', username: 'John Doe', date: '2024-01-15' },
+    { id: 2, title: 'Best Software Tools', excerpt: 'Software that will boost productivity...', image: 'https://source.unsplash.com/800x600?software', category: 'Software', username: 'Jane Doe', date: '2024-01-15' },
+    { id: 3, title: 'Understanding Hardware', excerpt: 'Dive deep into processors, RAM, and more...', image: 'https://source.unsplash.com/800x600?hardware', category: 'Hardware', username: 'Alice Doe', date: '2024-01-15' },
+    { id: 4, title: 'Code Like a Pro', excerpt: 'Master coding best practices...', image: 'https://source.unsplash.com/800x600?code', category: 'Code', username: 'Bob Doe', date: '2024-01-15' },
   ];
 
-  const filteredBlogs = blogs.filter(blog => blog.category.toLowerCase() === category.toLowerCase());
+  // Filter blogs based on category
+  useEffect(() => {
+    const filtered = blogs.filter(blog => blog.category.toLowerCase() === category.toLowerCase());
+    setFilteredBlogs(filtered);
+  }, [category]);
 
   return (
     <Container sx={{ py: 4 }}>
-      <Typography variant="h4" component="h2" sx={{ mb: 4 }}>
-        {category} Articles
+      <Typography variant="h4" component="h2" sx={{ mb: 4, fontWeight: 'bold', textAlign: 'center' }}>
+        🏷️ {category} Articles
       </Typography>
-      <Grid container spacing={4}>
-        {filteredBlogs.map(blog => (
-          <Grid item xs={12} sm={6} md={4} key={blog.id}>
-            <PostCard blog={blog} />
-          </Grid>
-        ))}
-      </Grid>
+
+      {/* Show Alert if No Blogs Found */}
+      {filteredBlogs.length === 0 ? (
+        <Alert severity="warning" sx={{ textAlign: 'center', py: 2 }}>
+          No articles found in the **{category}** category. Check back later!
+        </Alert>
+      ) : (
+        <Grid container spacing={4} justifyContent="center">
+          {filteredBlogs.map(blog => (
+            <Grid item xs={12} sm={8} md={6} lg={5} key={blog.id}>
+              <PostCard blog={blog} />
+            </Grid>
+          ))}
+        </Grid>
+      )}
     </Container>
   );
 }
