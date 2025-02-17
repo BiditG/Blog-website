@@ -20,56 +20,14 @@ function Home() {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const navigate = useNavigate();
 
-  // Dummy blog data with category for demonstration
+  // Dummy blog data
   const blogs = [
-    {
-      id: 1,
-      title: 'Mastering the Art of Writing',
-      excerpt: 'Explore the secrets behind compelling storytelling and content creation.',
-      image: 'https://source.unsplash.com/random/800x600?blog,writing',
-      category: 'Code',
-      username: 'John Doe',
-      date: '2024-01-15',
-    },
-    {
-      id: 2,
-      title: 'The Future of Tech',
-      excerpt: 'Dive into up-to-date trends and insights shaping the technology world.',
-      image: 'https://source.unsplash.com/random/800x600?blog,tech',
-      category: 'AI',
-      username: 'John Doe',
-      date: '2024-01-15',
-    },
-    {
-      id: 3,
-      title: 'Travel and Adventure',
-      excerpt: 'Discover breathtaking experiences and hidden gems across the globe.',
-      image: 'https://source.unsplash.com/random/800x600?blog,travel',
-      category: 'Travel',
-      username: 'John Doe',
-      date: '2024-01-15',
-    },
-    {
-      id: 4,
-      title: 'Design for the Modern Era',
-      excerpt: 'How contemporary design is influencing our daily lives and workspaces.',
-      image: 'https://source.unsplash.com/random/800x600?blog,design',
-      category: 'Design',
-      username: 'John Doe',
-      date: '2024-01-15',
-    },
-    {
-      id: 5,
-      title: 'Health and Wellness',
-      excerpt: 'Everything you need to know about maintaining a balanced and healthy lifestyle.',
-      image: 'https://source.unsplash.com/random/800x600?blog,health',
-      category: 'Health',
-      username: 'John Doe',
-      date: '2024-01-15',
-    },
+    { id: 1, title: 'Mastering the Art of Writing', excerpt: 'Explore the secrets behind compelling storytelling and content creation.', image: 'https://source.unsplash.com/800x600?blog,writing', category: 'Code', username: 'John Doe', date: '2024-01-15' },
+    { id: 2, title: 'The Future of Tech', excerpt: 'Dive into up-to-date trends and insights shaping the technology world.', image: 'https://source.unsplash.com/800x600?blog,tech', category: 'AI', username: 'John Doe', date: '2024-01-15' },
+    { id: 3, title: 'Travel and Adventure', excerpt: 'Discover breathtaking experiences and hidden gems across the globe.', image: 'https://source.unsplash.com/800x600?blog,travel', category: 'Travel', username: 'John Doe', date: '2024-01-15' },
   ];
 
-  const categories = ['All', 'Code', 'AI', 'Travel', 'Design', 'Health'];
+  const categories = ['All', 'Code', 'AI', 'Travel'];
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
@@ -88,33 +46,22 @@ function Home() {
 
   return (
     <Container sx={{ py: 4 }}>
-      {/* Welcoming Title */}
+      {/* Title */}
       <Typography
         variant="h3"
         component="h1"
         sx={{
           textAlign: 'center',
           mb: 4,
-          animation: 'fadeIn 2s ease-in-out',
-          background: 'rgba(0, 0, 0, 0.8)',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent',
+          fontWeight: 'bold',
+          color: '#333',
+          fontSize: '48px',
         }}
       >
-        Welcome to Our Blog
+        Think. Write. Inspire 📝
       </Typography>
 
-      {/* Add keyframes for animation */}
-      <style>
-        {`
-          @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-          }
-        `}
-      </style>
-
-      {/* Search Section */}
+      {/* Search Bar */}
       <Box
         component="form"
         onSubmit={handleSearchSubmit}
@@ -133,37 +80,23 @@ function Home() {
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
-                <IconButton
-                  type="submit"
-                  sx={{
-                    backgroundColor: '#333', // Dark gray for black palette
-                    '&:hover': {
-                      backgroundColor: '#000', // Black on hover
-                    },
-                    color: 'white',
-                    borderRadius: '50%',
-                    padding: '8px',
-                  }}
-                >
+                <IconButton type="submit" sx={{ color: '#1976d2' }}>
                   <SearchIcon />
                 </IconButton>
               </InputAdornment>
             ),
           }}
-          sx={{ width: { xs: '100%', sm: '60%', md: '50%' } }}
+          sx={{ width: { xs: '100%', sm: '60%', md: '50%' }, borderRadius: 3 }}
         />
       </Box>
 
-      {/* Category Filter Section */}
+      {/* Category Filter */}
       <Box sx={{ mb: 4, textAlign: 'center' }}>
-        <Typography variant="h6" gutterBottom>
-          Filter by Category
-        </Typography>
+        <Typography variant="h6" gutterBottom>Filter by Category</Typography>
         <Select
           value={selectedCategory}
           onChange={handleCategoryChange}
-          displayEmpty
-          sx={{ minWidth: 200 }}
+          sx={{ minWidth: 200, borderRadius: 3 }}
         >
           {categories.map((category) => (
             <MenuItem key={category} value={category}>
@@ -173,7 +106,7 @@ function Home() {
         </Select>
       </Box>
 
-      {/* Blog Cards Section */}
+      {/* Blog Posts */}
       <Grid container spacing={4} justifyContent="center">
         {filteredBlogs.map((blog) => (
           <Grid item xs={12} key={blog.id}>
