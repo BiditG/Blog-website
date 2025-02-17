@@ -73,11 +73,12 @@ function Navbar() {
 
   // Updated navigation items to include "Create Post"
   const navItems = [
-    { title: 'TECHNOLOGY', path: '/technology' },
-    { title: 'GADGET', path: '/gadget' },
-    { title: 'SOFTWARE', path: '/software' },
-    { title: 'APPS', path: '/apps' },
-    { title: 'CREATE POST', path: '/create-post' },
+    { title: 'AI', path: '/ai' },
+    { title: 'Hardware', path: '/hardware' },
+    { title: 'Software', path: '/software' },
+    { title: 'Apps', path: '/apps' },
+    { title: 'Code', path: '/code' },
+    { title: 'Create Post', path: '/create-post' },
   ];
 
   // Drawer content

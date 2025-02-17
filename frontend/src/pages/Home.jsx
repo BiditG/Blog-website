@@ -27,6 +27,8 @@ function Home() {
       excerpt: 'Explore the secrets behind compelling storytelling and content creation.',
       image: 'https://source.unsplash.com/random/800x600?blog,writing',
       category: 'Code',
+      username: 'John Doe',
+      date: '2024-01-15',
     },
     {
       id: 2,
@@ -34,6 +36,8 @@ function Home() {
       excerpt: 'Dive into up-to-date trends and insights shaping the technology world.',
       image: 'https://source.unsplash.com/random/800x600?blog,tech',
       category: 'AI',
+      username: 'John Doe',
+      date: '2024-01-15',
     },
     {
       id: 3,
@@ -41,6 +45,8 @@ function Home() {
       excerpt: 'Discover breathtaking experiences and hidden gems across the globe.',
       image: 'https://source.unsplash.com/random/800x600?blog,travel',
       category: 'Travel',
+      username: 'John Doe',
+      date: '2024-01-15',
     },
     {
       id: 4,
@@ -48,6 +54,8 @@ function Home() {
       excerpt: 'How contemporary design is influencing our daily lives and workspaces.',
       image: 'https://source.unsplash.com/random/800x600?blog,design',
       category: 'Design',
+      username: 'John Doe',
+      date: '2024-01-15',
     },
     {
       id: 5,
@@ -55,6 +63,8 @@ function Home() {
       excerpt: 'Everything you need to know about maintaining a balanced and healthy lifestyle.',
       image: 'https://source.unsplash.com/random/800x600?blog,health',
       category: 'Health',
+      username: 'John Doe',
+      date: '2024-01-15',
     },
   ];
 

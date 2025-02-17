@@ -45,18 +45,21 @@ function PostCard({ blog }) {
       <Box sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
         <CardContent sx={{ flexGrow: 1, p: 3 }}>
           <Typography gutterBottom variant="h5" component="div" sx={{ fontWeight: 'bold' }}>
-            {blog.title}
+            ✍️ {blog.title}
           </Typography>
           {blog.category && (
             <Chip
-              label={blog.category}
+              label={`🏷️ ${blog.category}`}
               variant="outlined"
               size="small"
               sx={{ mb: 1 }}
             />
           )}
-          <Typography variant="body2" color="text.secondary">
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
             {blog.excerpt}
+          </Typography>
+          <Typography variant="caption" color="text.secondary">
+            👤 Posted by {blog.username} on 📅 {new Date(blog.date).toLocaleDateString()}
           </Typography>
         </CardContent>
         <CardActions sx={{ justifyContent: 'space-between', p: 2 }}>
@@ -65,7 +68,7 @@ function PostCard({ blog }) {
             onClick={() => navigate(`/post/${blog.id}`)}
             sx={{ textTransform: 'none' }}
           >
-            Read More
+            Read More 📖
           </Button>
           <IconButton onClick={handleLikeToggle} color={liked ? 'error' : 'default'}>
             {liked ? <Favorite /> : <FavoriteBorder />}
