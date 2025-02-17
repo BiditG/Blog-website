@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Container, Card, CardMedia, CardContent, Typography, Button, Box } from '@mui/material';
 
 // Dummy blog data map
@@ -34,9 +34,9 @@ const blogData = {
 };
 
 function SinglePost() {
-  const { id } = useParams();
+  const location = useLocation();
   const navigate = useNavigate();
-  const blog = blogData[id] || {
+  const blog = location.state?.blog || {
     title: 'Blog Post Not Found',
     image: 'https://source.unsplash.com/random/800x400?404',
     content: 'The blog post you are looking for does not exist.',
@@ -45,7 +45,7 @@ function SinglePost() {
   };
 
   const handleNavigation = (direction) => {
-    const newId = parseInt(id) + direction;
+    const newId = parseInt(blog.id) + direction;
     if (blogData[newId]) {
       navigate(`/post/${newId}`);
     }
@@ -79,7 +79,7 @@ function SinglePost() {
             <Button
               variant="outlined"
               onClick={() => handleNavigation(-1)}
-              disabled={!blogData[parseInt(id) - 1]}
+              disabled={!blogData[parseInt(blog.id) - 1]}
               sx={{ mr: 1 }}
             >
               ⬅️ Previous
@@ -87,7 +87,7 @@ function SinglePost() {
             <Button
               variant="outlined"
               onClick={() => handleNavigation(1)}
-              disabled={!blogData[parseInt(id) + 1]}
+              disabled={!blogData[parseInt(blog.id) + 1]}
             >
               Next ➡️
             </Button>

@@ -12,6 +12,7 @@ import Footer from './components/Footer';
 import CreatePost from './pages/CreatePost';
 import SinglePost from './pages/SinglePost';
 import SideNav from './components/SideNav';
+import CategoryPage from './pages/CategoryPage';
 
 
 
@@ -32,6 +33,7 @@ function App() {
           <Route path='/create-post' element={<CreatePost/>}/>
           <Route path='/post/:id' element={<SinglePost/>}/>
           <Route path='/side-nav' element={<SideNav/>}/>
+          <Route path='/category/:category' element={<CategoryPage/>}/>
         </Routes>
         <Footer />
       </Router>

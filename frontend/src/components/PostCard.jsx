@@ -11,6 +11,10 @@ function PostCard({ blog }) {
     setLiked(!liked);
   };
 
+  const handleReadMore = () => {
+    navigate(`/post/${blog.id}`, { state: { blog } });
+  };
+
   return (
     <Card
       sx={{
@@ -25,6 +29,7 @@ function PostCard({ blog }) {
         flexDirection: { xs: 'column', md: 'row' },
         height: { xs: 'auto', md: 280 },
         overflow: 'hidden',
+        cursor: 'pointer',
       }}
     >
       <CardMedia
@@ -65,7 +70,7 @@ function PostCard({ blog }) {
         <CardActions sx={{ justifyContent: 'space-between', p: 2 }}>
           <Button
             size="small"
-            onClick={() => navigate(`/post/${blog.id}`)}
+            onClick={handleReadMore}
             sx={{ textTransform: 'none' }}
           >
             Read More 📖

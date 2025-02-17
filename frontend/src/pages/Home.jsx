@@ -9,6 +9,7 @@ import {
   Select,
   MenuItem,
   Typography,
+  IconButton,
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { useNavigate } from 'react-router-dom';
@@ -95,7 +96,7 @@ function Home() {
           textAlign: 'center',
           mb: 4,
           animation: 'fadeIn 2s ease-in-out',
-          background: 'linear-gradient(90deg, #00c6ff, #0072ff)', // Blueish gradient
+          background: 'rgba(0, 0, 0, 0.8)',
           WebkitBackgroundClip: 'text',
           WebkitTextFillColor: 'transparent',
         }}
@@ -130,17 +131,27 @@ function Home() {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <SearchIcon color="action" />
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  type="submit"
+                  sx={{
+                    backgroundColor: '#333', // Dark gray for black palette
+                    '&:hover': {
+                      backgroundColor: '#000', // Black on hover
+                    },
+                    color: 'white',
+                    borderRadius: '50%',
+                    padding: '8px',
+                  }}
+                >
+                  <SearchIcon />
+                </IconButton>
               </InputAdornment>
             ),
           }}
           sx={{ width: { xs: '100%', sm: '60%', md: '50%' } }}
         />
-        <Button type="submit" variant="contained" color="primary" sx={{ ml: 2 }}>
-          Search
-        </Button>
       </Box>
 
       {/* Category Filter Section */}
