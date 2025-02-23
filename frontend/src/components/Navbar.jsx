@@ -37,6 +37,7 @@ function Navbar() {
 
   // Navigation Categories
   const navItems = [
+    {title: 'Home', path: '/'},
     { title: 'AI', path: '/category/ai' },
     { title: 'Hardware', path: '/category/hardware' },
     { title: 'Software', path: '/category/software' },
@@ -49,7 +50,7 @@ function Navbar() {
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center', p: 2 }}>
       <Typography variant="h6" sx={{ my: 2 }}>
-        TechWire
+        BiditBlogs
       </Typography>
       <List>
         {navItems.map((item) => (
@@ -104,6 +105,7 @@ function Navbar() {
               onClose={handleAccountMenuClose}
               keepMounted
             >
+              
               <MenuItem onClick={() => navigate('/profile')}>Profile</MenuItem>
               <MenuItem onClick={() => navigate('/login')}>Login</MenuItem>
               <MenuItem onClick={() => navigate('/register')}>Register</MenuItem>
