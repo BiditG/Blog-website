@@ -7,23 +7,26 @@ import {
   Box,
   Paper,
   IconButton,
+  ToggleButton,
+  ToggleButtonGroup,
 } from "@mui/material";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import ClearIcon from "@mui/icons-material/Clear";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
+import FormatBoldIcon from "@mui/icons-material/FormatBold";
+import FormatItalicIcon from "@mui/icons-material/FormatItalic";
+import FormatUnderlinedIcon from "@mui/icons-material/FormatUnderlined";
 import axios from "axios";
 
 function CreatePost() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [format, setFormat] = useState([]); // Formatting options
   const [images, setImages] = useState([]);
   const [imagePreviews, setImagePreviews] = useState([]);
 
   // Handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
-
     const formData = new FormData();
     formData.append("title", title);
     formData.append("content", content);
@@ -35,7 +38,7 @@ function CreatePost() {
       });
       console.log("Post saved:", response.data);
 
-      // Reset form after successful submission
+      // Reset form
       setTitle("");
       setContent("");
       setImages([]);
@@ -54,18 +57,17 @@ function CreatePost() {
 
   // Remove selected image
   const removeImage = (index) => {
-    const updatedImages = images.filter((_, i) => i !== index);
-    const updatedPreviews = imagePreviews.filter((_, i) => i !== index);
-    setImages(updatedImages);
-    setImagePreviews(updatedPreviews);
+    setImages(images.filter((_, i) => i !== index));
+    setImagePreviews(imagePreviews.filter((_, i) => i !== index));
   };
 
-  // Reset form
-  const handleCancel = () => {
-    setTitle("");
-    setContent("");
-    setImages([]);
-    setImagePreviews([]);
+  // Apply formatting
+  const applyFormatting = (style) => {
+    let newText = content;
+    if (style === "bold") newText = `<b>${content}</b>`;
+    if (style === "italic") newText = `<i>${content}</i>`;
+    if (style === "underline") newText = `<u>${content}</u>`;
+    setContent(newText);
   };
 
   return (
@@ -87,12 +89,41 @@ function CreatePost() {
             sx={{ backgroundColor: "white", borderRadius: 2 }}
           />
 
-          {/* Rich Text Editor */}
-          <ReactQuill
+          {/* Text Formatting Buttons */}
+          <ToggleButtonGroup
+            value={format}
+            onChange={(e, newFormat) => {
+              setFormat(newFormat);
+              applyFormatting(newFormat);
+            }}
+            aria-label="text formatting"
+            sx={{ mb: 2 }}
+          >
+            <ToggleButton value="bold" aria-label="bold">
+              <FormatBoldIcon />
+            </ToggleButton>
+            <ToggleButton value="italic" aria-label="italic">
+              <FormatItalicIcon />
+            </ToggleButton>
+            <ToggleButton value="underline" aria-label="underline">
+              <FormatUnderlinedIcon />
+            </ToggleButton>
+          </ToggleButtonGroup>
+
+          {/* Post Content */}
+          <TextField
+            required
+            fullWidth
+            multiline
+            minRows={4}
+            maxRows={10}
+            label="Post Content"
             value={content}
-            onChange={setContent}
-            theme="snow"
-            style={{ height: "200px", marginBottom: "20px", backgroundColor: "white", borderRadius: "8px" }}
+            onChange={(e) => setContent(e.target.value)}
+            sx={{
+              backgroundColor: "white",
+              borderRadius: 2,
+            }}
           />
 
           {/* Image Upload & Preview */}
@@ -127,12 +158,7 @@ function CreatePost() {
             <Button type="submit" variant="contained" color="primary" sx={{ textTransform: "none", fontWeight: "bold" }}>
               Submit 🚀
             </Button>
-            <Button
-              variant="outlined"
-              color="secondary"
-              onClick={handleCancel}
-              sx={{ textTransform: "none", fontWeight: "bold" }}
-            >
+            <Button variant="outlined" color="secondary" onClick={() => { setTitle(""); setContent(""); setImages([]); setImagePreviews([]); }} sx={{ textTransform: "none", fontWeight: "bold" }}>
               Cancel ❌
             </Button>
           </Box>
