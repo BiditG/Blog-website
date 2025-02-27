@@ -1,26 +1,27 @@
-require('dotenv').config();
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
+require("dotenv").config();
+
+const postRoutes = require("./routes/postRoutes"); // Ensure this path is correct
 
 const app = express();
 
 // Middleware
-app.use(express.json());
 app.use(cors());
+app.use(express.json()); // Parses JSON body
 
-// Connect to MongoDB (Local)
-const mongoURI = process.env.MONGO_URI || 'mongodb://localhost:27017/Blog';
-
-mongoose
-  .connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('✅ MongoDB Connected (Compass/Local)'))
-  .catch((err) => console.error('❌ MongoDB Connection Error:', err));
-
-// Test Route
-app.get('/', (req, res) => {
-  res.send('Hello, MongoDB is Connected!');
+// Connect to MongoDB
+mongoose.connect(process.env.MONGO_URI || "mongodb://localhost:27017/blogDB", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
 });
+
+mongoose.connection.on("connected", () => console.log("✅ MongoDB Connected!"));
+mongoose.connection.on("error", (err) => console.log("❌ MongoDB Connection Error:", err));
+
+// Routes
+app.use("/api/posts", postRoutes);  // Ensure this line is present
 
 // Start Server
 const PORT = process.env.PORT || 5000;
