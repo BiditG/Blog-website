@@ -1,19 +1,17 @@
 const express = require("express");
-const Post = require("../models/Post"); // Ensure this path is correct
+const Post = require("../models/Post");
 
-const router = express.Router(); // ✅ Create Express Router
+const router = express.Router();
 
-// Create a New Post (POST /api/posts)
-router.post("/", async (req, res) => {
+// GET all posts
+router.get("/", async (req, res) => {
   try {
-    const { title, content } = req.body;
-    const newPost = new Post({ title, content });
-    await newPost.save();
-    res.status(201).json({ message: "Post created successfully", post: newPost });
+    const posts = await Post.find(); // Fetch all posts from MongoDB
+    res.json(posts);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Server Error" });
+    console.error("Error fetching posts:", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
-module.exports = router; // ✅ Ensure we export ONLY the router
+module.exports = router;

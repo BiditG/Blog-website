@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { Card, CardMedia, CardContent, CardActions, Typography, Button, IconButton, Box, Chip } from '@mui/material';
+import { 
+  Card, CardMedia, CardContent, CardActions, Typography, Button, 
+  IconButton, Box, Chip 
+} from '@mui/material';
 import { Favorite, FavoriteBorder } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
-import CommentsSection from './CommentSection'; 
 
 function PostCard({ blog }) {
   const navigate = useNavigate();
@@ -15,7 +17,7 @@ function PostCard({ blog }) {
   };
 
   const handleReadMore = () => {
-    navigate(`/post/${blog.id}`, { state: { blog } });
+    navigate(`/post/${blog._id}`, { state: { blog } });
   };
 
   return (
@@ -24,10 +26,7 @@ function PostCard({ blog }) {
         borderRadius: 3,
         boxShadow: 2,
         transition: 'all 0.3s ease-in-out',
-        '&:hover': {
-          transform: 'translateY(-3px)',
-          boxShadow: 6,
-        },
+        '&:hover': { transform: 'translateY(-3px)', boxShadow: 6 },
         display: 'flex',
         flexDirection: { xs: 'column', md: 'row' },
         height: { xs: 'auto', md: 280 },
@@ -44,11 +43,9 @@ function PostCard({ blog }) {
           objectFit: 'cover',
           backgroundColor: '#f0f0f0',
           transition: 'all 0.3s',
-          '&:hover': {
-            filter: 'brightness(1.05)',
-          },
+          '&:hover': { filter: 'brightness(1.05)' },
         }}
-        image={blog.image || 'https://via.placeholder.com/800x600?text=No+Image'}
+        image={blog.images?.[0] || 'https://via.placeholder.com/800x600?text=No+Image'}
         alt={blog.title}
       />
 
@@ -60,20 +57,15 @@ function PostCard({ blog }) {
           </Typography>
 
           {blog.category && (
-            <Chip
-              label={`🏷️ ${blog.category}`}
-              variant="outlined"
-              size="small"
-              sx={{ mb: 1, fontWeight: 'bold' }}
-            />
+            <Chip label={`🏷️ ${blog.category}`} variant="outlined" size="small" sx={{ mb: 1, fontWeight: 'bold' }} />
           )}
 
           <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-            {blog.excerpt}
+            {blog.excerpt || blog.content.substring(0, 100) + '...'}
           </Typography>
 
           <Typography variant="caption" color="text.secondary">
-            👤 {blog.username} | 📅 {new Date(blog.date).toLocaleDateString()}
+            👤 {blog.username || "Unknown"} | 📅 {new Date(blog.date).toLocaleDateString()}
           </Typography>
         </CardContent>
 
@@ -82,14 +74,7 @@ function PostCard({ blog }) {
           <Button
             size="small"
             onClick={handleReadMore}
-            sx={{
-              textTransform: 'none',
-              fontWeight: 'bold',
-              color: '#1976d2',
-              '&:hover': {
-                textDecoration: 'underline',
-              },
-            }}
+            sx={{ textTransform: 'none', fontWeight: 'bold', color: '#1976d2', '&:hover': { textDecoration: 'underline' } }}
           >
             Read More 📖
           </Button>
@@ -105,11 +90,10 @@ function PostCard({ blog }) {
           </Box>
         </CardActions>
       </Box>
-
-
     </Card>
   );
 }
 
 export default PostCard;
+
 

@@ -1,14 +1,6 @@
 import React, { useState } from "react";
 import {
-  Container,
-  TextField,
-  Button,
-  Typography,
-  Box,
-  Paper,
-  IconButton,
-  ToggleButton,
-  ToggleButtonGroup,
+  Container, TextField, Button, Typography, Box, Paper, IconButton, ToggleButton, ToggleButtonGroup
 } from "@mui/material";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import ClearIcon from "@mui/icons-material/Clear";
@@ -20,11 +12,10 @@ import axios from "axios";
 function CreatePost() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [format, setFormat] = useState([]); // Formatting options
+  const [format, setFormat] = useState([]);
   const [images, setImages] = useState([]);
   const [imagePreviews, setImagePreviews] = useState([]);
 
-  // Handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData();
@@ -36,9 +27,8 @@ function CreatePost() {
       const response = await axios.post("http://localhost:5000/api/posts", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
-      console.log("Post saved:", response.data);
 
-      // Reset form
+      console.log("Post saved:", response.data);
       setTitle("");
       setContent("");
       setImages([]);
@@ -48,25 +38,22 @@ function CreatePost() {
     }
   };
 
-  // Handle multiple image uploads
   const handleImageChange = (event) => {
     const files = Array.from(event.target.files);
     setImages([...images, ...files]);
     setImagePreviews([...imagePreviews, ...files.map((file) => URL.createObjectURL(file))]);
   };
 
-  // Remove selected image
   const removeImage = (index) => {
     setImages(images.filter((_, i) => i !== index));
     setImagePreviews(imagePreviews.filter((_, i) => i !== index));
   };
 
-  // Apply formatting
   const applyFormatting = (style) => {
     let newText = content;
-    if (style === "bold") newText = `<b>${content}</b>`;
-    if (style === "italic") newText = `<i>${content}</i>`;
-    if (style === "underline") newText = `<u>${content}</u>`;
+    if (style === "bold") newText = `${content}<b> </b>`;
+    if (style === "italic") newText = `${content}<i> </i>`;
+    if (style === "underline") newText = `${content}<u> </u>`;
     setContent(newText);
   };
 
@@ -77,19 +64,9 @@ function CreatePost() {
           ✍️ Create a New Post
         </Typography>
 
-        {/* Form */}
         <Box component="form" onSubmit={handleSubmit} sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-          {/* Post Title */}
-          <TextField
-            required
-            fullWidth
-            label="Post Title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            sx={{ backgroundColor: "white", borderRadius: 2 }}
-          />
+          <TextField required fullWidth label="Post Title" value={title} onChange={(e) => setTitle(e.target.value)} />
 
-          {/* Text Formatting Buttons */}
           <ToggleButtonGroup
             value={format}
             onChange={(e, newFormat) => {
@@ -110,7 +87,6 @@ function CreatePost() {
             </ToggleButton>
           </ToggleButtonGroup>
 
-          {/* Post Content */}
           <TextField
             required
             fullWidth
@@ -120,13 +96,8 @@ function CreatePost() {
             label="Post Content"
             value={content}
             onChange={(e) => setContent(e.target.value)}
-            sx={{
-              backgroundColor: "white",
-              borderRadius: 2,
-            }}
           />
 
-          {/* Image Upload & Preview */}
           <Box sx={{ display: "flex", alignItems: "center", gap: 2, flexWrap: "wrap" }}>
             <IconButton component="label">
               <input type="file" multiple hidden onChange={handleImageChange} />
@@ -135,13 +106,7 @@ function CreatePost() {
 
             {imagePreviews.map((preview, index) => (
               <Box key={index} sx={{ position: "relative", display: "inline-block" }}>
-                <img
-                  src={preview}
-                  alt="Preview"
-                  width="100"
-                  height="100"
-                  style={{ borderRadius: 8, objectFit: "cover" }}
-                />
+                <img src={preview} alt="Preview" width="100" height="100" style={{ borderRadius: 8, objectFit: "cover" }} />
                 <IconButton
                   size="small"
                   sx={{ position: "absolute", top: 0, right: 0, backgroundColor: "rgba(255,255,255,0.8)" }}
@@ -153,12 +118,11 @@ function CreatePost() {
             ))}
           </Box>
 
-          {/* Action Buttons */}
           <Box sx={{ display: "flex", justifyContent: "space-between", mt: 3 }}>
-            <Button type="submit" variant="contained" color="primary" sx={{ textTransform: "none", fontWeight: "bold" }}>
+            <Button type="submit" variant="contained" color="primary">
               Submit 🚀
             </Button>
-            <Button variant="outlined" color="secondary" onClick={() => { setTitle(""); setContent(""); setImages([]); setImagePreviews([]); }} sx={{ textTransform: "none", fontWeight: "bold" }}>
+            <Button variant="outlined" color="secondary" onClick={() => { setTitle(""); setContent(""); setImages([]); setImagePreviews([]); }}>
               Cancel ❌
             </Button>
           </Box>

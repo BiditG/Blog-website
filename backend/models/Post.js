@@ -1,19 +1,9 @@
-const express = require("express");
-const Post = require("../models/Post"); // Ensure the Post model is correct
+const mongoose = require("mongoose");
 
-const router = express.Router();
+const PostSchema = new mongoose.Schema({
+  title: { type: String, required: true },
+  content: { type: String, required: true },
+  images: [{ type: String }]
+}, { timestamps: true });
 
-// Create a New Post (POST /api/posts)
-router.post("/", async (req, res) => {
-  try {
-    const { title, content } = req.body;
-    const newPost = new Post({ title, content });
-    await newPost.save();
-    res.status(201).json({ message: "Post created successfully", post: newPost });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Server Error" });
-  }
-});
-
-module.exports = router;
+module.exports = mongoose.model("Post", PostSchema);

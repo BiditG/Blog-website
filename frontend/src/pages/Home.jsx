@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Container,
   Box,
@@ -14,20 +14,29 @@ import {
 import SearchIcon from '@mui/icons-material/Search';
 import { useNavigate } from 'react-router-dom';
 import PostCard from '../components/PostCard';
+import axios from 'axios';
 
 function Home() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const [blogs, setBlogs] = useState([]); // State for posts
   const navigate = useNavigate();
 
-  // Dummy blog data
-  const blogs = [
-    { id: 1, title: 'Mastering the Art of Writing', excerpt: 'Explore the secrets behind compelling storytelling and content creation.', image: 'https://source.unsplash.com/800x600?blog,writing', category: 'Code', username: 'John Doe', date: '2024-01-15' },
-    { id: 2, title: 'The Future of Tech', excerpt: 'Dive into up-to-date trends and insights shaping the technology world.', image: 'https://source.unsplash.com/800x600?blog,tech', category: 'AI', username: 'John Doe', date: '2024-01-15' },
-    { id: 3, title: 'Travel and Adventure', excerpt: 'Discover breathtaking experiences and hidden gems across the globe.', image: 'https://source.unsplash.com/800x600?blog,travel', category: 'Travel', username: 'John Doe', date: '2024-01-15' },
-  ];
-
   const categories = ['All', 'Code', 'AI', 'Travel'];
+
+  // Fetch posts from MongoDB
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/api/posts");
+        setBlogs(response.data);
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+      }
+    };
+
+    fetchPosts();
+  }, []);
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
@@ -46,7 +55,6 @@ function Home() {
 
   return (
     <Container sx={{ py: 4 }}>
-      {/* Title */}
       <Typography
         variant="h3"
         component="h1"
@@ -62,16 +70,7 @@ function Home() {
       </Typography>
 
       {/* Search Bar */}
-      <Box
-        component="form"
-        onSubmit={handleSearchSubmit}
-        sx={{
-          mb: 4,
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
+      <Box component="form" onSubmit={handleSearchSubmit} sx={{ mb: 4, display: 'flex', justifyContent: 'center' }}>
         <TextField
           variant="outlined"
           placeholder="Search blog posts..."
@@ -93,11 +92,7 @@ function Home() {
       {/* Category Filter */}
       <Box sx={{ mb: 4, textAlign: 'center' }}>
         <Typography variant="h6" gutterBottom>Filter by Category</Typography>
-        <Select
-          value={selectedCategory}
-          onChange={handleCategoryChange}
-          sx={{ minWidth: 200, borderRadius: 3 }}
-        >
+        <Select value={selectedCategory} onChange={handleCategoryChange} sx={{ minWidth: 200, borderRadius: 3 }}>
           {categories.map((category) => (
             <MenuItem key={category} value={category}>
               {category}
@@ -109,7 +104,7 @@ function Home() {
       {/* Blog Posts */}
       <Grid container spacing={4} justifyContent="center">
         {filteredBlogs.map((blog) => (
-          <Grid item xs={12} key={blog.id}>
+          <Grid item xs={12} key={blog._id}>
             <PostCard blog={blog} />
           </Grid>
         ))}
@@ -119,3 +114,4 @@ function Home() {
 }
 
 export default Home;
+
