@@ -28,13 +28,13 @@ function CreatePost() {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
-      console.log("Post saved:", response.data);
+      console.log("✅ Post saved:", response.data);
       setTitle("");
       setContent("");
       setImages([]);
       setImagePreviews([]);
     } catch (error) {
-      console.error("Error saving post", error);
+      console.error("❌ Error saving post", error);
     }
   };
 
@@ -51,9 +51,9 @@ function CreatePost() {
 
   const applyFormatting = (style) => {
     let newText = content;
-    if (style === "bold") newText = `${content}<b> </b>`;
-    if (style === "italic") newText = `${content}<i> </i>`;
-    if (style === "underline") newText = `${content}<u> </u>`;
+    if (style === "bold") newText = `<b>${content}</b>`;
+    if (style === "italic") newText = `<i>${content}</i>`;
+    if (style === "underline") newText = `<u>${content}</u>`;
     setContent(newText);
   };
 
@@ -87,16 +87,7 @@ function CreatePost() {
             </ToggleButton>
           </ToggleButtonGroup>
 
-          <TextField
-            required
-            fullWidth
-            multiline
-            minRows={4}
-            maxRows={10}
-            label="Post Content"
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-          />
+          <TextField required fullWidth multiline minRows={4} maxRows={10} label="Post Content" value={content} onChange={(e) => setContent(e.target.value)} />
 
           <Box sx={{ display: "flex", alignItems: "center", gap: 2, flexWrap: "wrap" }}>
             <IconButton component="label">
@@ -107,11 +98,7 @@ function CreatePost() {
             {imagePreviews.map((preview, index) => (
               <Box key={index} sx={{ position: "relative", display: "inline-block" }}>
                 <img src={preview} alt="Preview" width="100" height="100" style={{ borderRadius: 8, objectFit: "cover" }} />
-                <IconButton
-                  size="small"
-                  sx={{ position: "absolute", top: 0, right: 0, backgroundColor: "rgba(255,255,255,0.8)" }}
-                  onClick={() => removeImage(index)}
-                >
+                <IconButton size="small" sx={{ position: "absolute", top: 0, right: 0 }} onClick={() => removeImage(index)}>
                   <ClearIcon fontSize="small" />
                 </IconButton>
               </Box>
@@ -119,12 +106,8 @@ function CreatePost() {
           </Box>
 
           <Box sx={{ display: "flex", justifyContent: "space-between", mt: 3 }}>
-            <Button type="submit" variant="contained" color="primary">
-              Submit 🚀
-            </Button>
-            <Button variant="outlined" color="secondary" onClick={() => { setTitle(""); setContent(""); setImages([]); setImagePreviews([]); }}>
-              Cancel ❌
-            </Button>
+            <Button type="submit" variant="contained" color="primary">Submit 🚀</Button>
+            <Button variant="outlined" color="secondary" onClick={() => { setTitle(""); setContent(""); setImages([]); setImagePreviews([]); }}>Cancel ❌</Button>
           </Box>
         </Box>
       </Paper>

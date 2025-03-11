@@ -13,7 +13,7 @@ app.use(cors());
 app.use(express.json()); // Parses JSON body
 
 // ✅ Connect to MongoDB (Fixing localhost issue)
-const MONGO_URI = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/Blog";
+const MONGO_URI = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/blogDB";
 
 mongoose
   .connect(MONGO_URI, {
