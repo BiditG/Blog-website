@@ -14,7 +14,7 @@ const upload = multer({ storage });
 router.post("/", upload.array("images", 5), async (req, res) => {
   try {
     const { title, content } = req.body;
-    const imagePaths = req.files.map(file => `/uploads/${file.filename}`); // Store image URLs
+    const imagePaths = req.files.map(file => `/uploads/${file.filename}`); 
 
     const newPost = new Post({ title, content, images: imagePaths });
     await newPost.save();
