@@ -13,6 +13,7 @@ import CreatePost from './pages/CreatePost';
 import SinglePost from './pages/SinglePost';
 import SideNav from './components/SideNav';
 import CategoryPage from './pages/CategoryPage';
+import Profile from './pages/Profile';
 
 
 
@@ -30,6 +31,7 @@ function App() {
           <Route path='/' element={<Home/>}/>
           <Route path='/login' element={<Login/>}/>
           <Route path='/register' element={<Register/>}/>
+          <Route path='profile'  element={<Profile/>}/>
           <Route path='/dashboard' element={<Dashboard/>}/>
           <Route path='/create-post' element={<CreatePost/>}/>
           <Route path='/post/:id' element={<SinglePost/>}/>
